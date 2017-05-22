@@ -33,6 +33,12 @@ h2 {
     width: 100%;
 }
 
+table#CountryHead{
+	background-color: #aaccff;
+    font-family: arial, sans-serif;
+    width: 100%;
+}
+
 table {
 	background-color: #aaccff;
     font-family: arial, sans-serif;

@@ -3,11 +3,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>nl.hu.v1wac</groupId>
-	<artifactId>firstapp</artifactId>
+	<artifactId>V1WAC-MAVEN </artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
-	<name>firstapp</name>
+	<name>V1WAC-MAVEN</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
