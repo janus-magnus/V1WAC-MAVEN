@@ -28,9 +28,10 @@ h2 {
 }
 
 #CountryInfo {
+	width: 100%;
+	overflow-x: auto;
 	background-color: #aaccff;
     font-family: arial, sans-serif;
-    width: 100%;
 }
 
 table#CountryHead{
@@ -42,7 +43,6 @@ table#CountryHead{
 table {
 	background-color: #aaccff;
     font-family: arial, sans-serif;
-    width: 100%;
 }
 
 td, th {

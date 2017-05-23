@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 <title>API</title>
 <link rel="stylesheet" type="text/css" href="apiStyle.css">
+<link rel="stylesheet" media="only screen and (max-width: 750px)" href="narrow.css" />
+<link rel="stylesheet" media="only screen and (min-width: 750px)" href="wide.css" />
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 </head>
 <body>
@@ -17,7 +20,7 @@
 			<table id="WeatherResults"></table>
 		</div>
 		<div id="cheader"><header><h2 id="ch">Sample Text</h2></header></div>
-		<div id="countryList">
+		<div id="countryList" style="overflow-x:auto;">
 		<table id="CountryInfo">
 		<thead>
 		<tr>

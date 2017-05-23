@@ -22,19 +22,36 @@ function windConverter(degree){
 }
 
 function showWeather(lon, lat, city){
-	$.getJSON("http://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+lon+"&units=metric&APPID=b29420af2d5deea7456a513f9babc649", function(data) {
-		var table_body = "";
-		table_body += 
-		"<tr><td>" + "Temperatuur" + "</td><td><b>" + data.main.temp + " ºC" + " </b></td></tr>" +
-		"<tr><td>" + "Windsnelheid" + "</td><td><b>" + data.wind.speed + " km/h" +"</b></td></tr>" +
-		"<tr><td>" + "Winddirectie" + "</td><td><b>" + windConverter(data.wind.deg) + "</b></td></tr>" +
-		"<tr><td>" + "Windsnelheid" + "</td><td><b>" + data.main.humidity + " %" +"</b></td></tr>" +
-		"<tr><td>" + "Zonsopkomst" + "</td><td><b>" + timeConverter(data.sys.sunrise) + "</b></td></tr>" +
-		"<tr><td>" + "Zonsondergang" + "</td><td><b>" + timeConverter(data.sys.sunset) + "</b></td></tr>";
 	
-		$("#WeatherResults").html(table_body);
-		$("#wh").html("Het weer in " + city);
-	});
+	var weatherdata;	
+		
+	if (localStorage.getItem(city) == null){
+		$.getJSON("http://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+lon+"&units=metric&APPID=b29420af2d5deea7456a513f9babc649", function(data) {
+			
+			weatherdata = JSON.stringify(data);	
+			localStorage.setItem(city, weatherdata);
+			console.log("hit");
+		});
+	}
+		
+		
+		
+		
+	var parseback = JSON.parse(localStorage.getItem(city));
+	console.log(parseback.main.temp);	
+		
+	var table_body = "";
+	table_body += 
+	"<tr><td>" + "Temperatuur" + "</td><td><b>" + parseback.main.temp + " ºC" + " </b></td></tr>" +
+	"<tr><td>" + "Windsnelheid" + "</td><td><b>" + parseback.wind.speed + " km/h" +"</b></td></tr>" +
+	"<tr><td>" + "Winddirectie" + "</td><td><b>" + windConverter(parseback.wind.deg) + "</b></td></tr>" +
+	"<tr><td>" + "Windsnelheid" + "</td><td><b>" + parseback.main.humidity + " %" +"</b></td></tr>" +
+	"<tr><td>" + "Zonsopkomst" + "</td><td><b>" + timeConverter(parseback.sys.sunrise) + "</b></td></tr>" +
+	"<tr><td>" + "Zonsondergang" + "</td><td><b>" + timeConverter(parseback.sys.sunset) + "</b></td></tr>";
+
+	$("#WeatherResults").html(table_body);
+	$("#wh").html("Het weer in " + city);
+	
 }
 
 function startup(){
@@ -54,27 +71,32 @@ function startup(){
 		"<tr><td>" + "Longitude" + "</td><td><b>" + data.lon + "</b></td></tr>" +
 		"<tr><td>" + "Latitude" + "</td><td><b>" + data.lat + "</b></td></tr>" +
 		"<tr><td>" + "IP" + "</td><td><b>" + data.query + "</b></td></tr>";
+
+		table_body = $(table_body).click(function () {
+			showWeather(longitude, latitude, data.city)
+		});
+		
+		
 		$("#GeoResults").html(table_body);
 		showWeather(longitude, latitude, data.city);
 	});
 	
-	$.getJSON("http://localhost:4771/V1WAC-MAVEN/restservices/countries", function(data){
-		var table_body = "";
+	$.getJSON("http://localhost:4477/V1WAC-MAVEN/restservices/countries", function(data){
 		var newRow;
 		$.each(data, function(x, y)	 {
-			table_body +=
+			newRow =
 			"<tr class=\"rows\"><td>" + y.name + "</td>" +
 			"</td><td>" + y.capital + "</td>" +
 			"</td><td>" + y.region + "</td>" +
 			"</td><td>" + y.surface + "</td>" +
 			"</td><td>" + y.population + "</td></tr>";
 			
-			newRow = $(table_body).click(function () {
-				console.log(y.capital)});
-			
-			
+			newRow = $(newRow).click(function () {
+				showWeather(y.lng, y.lat, y.capital)
+			});
+			$("#CountryInfo").append(newRow);
 		});
-		$("#CountryInfo").append(newRow);
+
 	});
 	}
 
